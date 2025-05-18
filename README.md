@@ -1,1 +1,1 @@
-django_rest_framework
+django rest framework
