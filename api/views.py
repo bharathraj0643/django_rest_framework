@@ -21,6 +21,8 @@ from .paginations import CustomPagination
 
 from employees.filters import EmployeeFilter
 
+from rest_framework.filters import SearchFilter , OrderingFilter
+
 
 @api_view(["GET", "POST"])
 def studentsView(request):
@@ -185,7 +187,6 @@ class EmployeeViewset(viewsets.ModelViewSet):
     pagination_class = CustomPagination
     filterset_class = EmployeeFilter
 
-
 """
 # blog and comments using generics
 class BlogsView(generics.ListCreateAPIView):
@@ -212,6 +213,9 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
 class BlogViewset(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+    filter_backends = [SearchFilter , OrderingFilter]
+    search_fields = ['blog_title' , 'blog_body']
+    ordering_fields = ['id','blog_title']
 
 class CommentViewset(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
