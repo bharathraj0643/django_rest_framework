@@ -135,7 +135,7 @@ class EmployeeDetail(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
 """
 
-
+'''
 # viewsets
 class EmployeeViewset(viewsets.ViewSet):
     def list(self, request):
@@ -150,12 +150,12 @@ class EmployeeViewset(viewsets.ViewSet):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-    def retrieve(self, request, pk=None):
+    def retrieve(self, request, pk):
         employee = get_object_or_404(Employee, pk=pk)
         serializer = EmployeeSerializer(employee)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update(self, request, pk=None):
+    def update(self, request, pk):
         employee = get_object_or_404(Employee, pk=pk)
         serializer = EmployeeSerializer(employee, data=request.data)
         if serializer.is_valid():
@@ -163,7 +163,13 @@ class EmployeeViewset(viewsets.ViewSet):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-    def delete(self, request, pk=None):
+    def delete(self, request, pk):
         employee = get_object_or_404(Employee, pk=pk)
         employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+'''
+
+# modelviewset
+class EmployeeViewset(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
